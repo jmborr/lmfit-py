@@ -150,7 +150,7 @@ class Model(object):
         self.param_hints = OrderedDict()
         # the following has been changed from OrderedSet for the time being
         self._param_names = []
-        self._parse_params()
+        self._parse_params()  # also find out name of independent variable
         if self.independent_vars is None:
             self.independent_vars = []
         if name is None and hasattr(self.func, '__name__'):
@@ -197,7 +197,8 @@ class Model(object):
         raise NotImplementedError("Model.copy does not work. Make a new Model")
 
     def _parse_params(self):
-        """Build parameters from function arguments."""
+        """Build parameters from function arguments and identify the name
+        of the independent variable"""
         if self.func is None:
             return
         if hasattr(self.func, 'argnames') and hasattr(self.func, 'kwargs'):
